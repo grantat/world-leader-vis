@@ -1,7 +1,5 @@
-
 # python virtual environment
 venv/
 # every attribute stored in json format
-backup_json/
 __pycache__
 .DS_STORE
