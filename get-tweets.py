@@ -4,7 +4,7 @@
 import tweepy  # https://github.com/tweepy/tweepy
 import csv
 import json
-from os import getenv
+from os import getenv, path
 try:
     from config import setEnvironVars
 except Exception:
@@ -20,41 +20,68 @@ def get_all_tweets(screen_name):
     auth.set_access_token(access_key, access_secret)
     api = tweepy.API(auth)
 
-    # initialize a list to hold all the tweepy Tweets
-    alltweets = []
+    # check if I have the twitter users I want to check
+    if(sum(1 for line in open('data/worldLeaders.json')) < 1):
+        # Iterate through all members of the owner's list
+        worldLeaderList = []
+        for member in tweepy.Cursor(api.list_members, 'verified', 'world-leaders').items():
+            worldLeaderList.append(member._json)
 
-    # make initial request for most recent tweets (200 is the maximum allowed
-    # count)
-    new_tweets = api.user_timeline(screen_name=screen_name, count=200)
+        with open('data/worldLeaders.json', 'w') as f:
+            json.dump(worldLeaderList, f)
 
-    # save most recent tweets
-    alltweets.extend(new_tweets)
+    with open('data/worldLeaders.json', 'r') as f:
+        # load users
+        wl = json.load(f)
 
-    # save the id of the oldest tweet less one
-    oldest = alltweets[-1].id - 1
+        for leader in wl:
+            screen_name = leader["screen_name"]
 
-    # keep grabbing tweets until there are no tweets left to grab
-    while len(new_tweets) > 0:
-        print("getting tweets before %s" % (oldest))
+            if path.isfile("data/" + screen_name + "_tweets.csv"):
+                continue
 
-        # all subsiquent requests use the max_id param to prevent duplicates
-        new_tweets = api.user_timeline(
-            screen_name=screen_name, count=200, max_id=oldest)
+            # initialize a list to hold all the tweepy Tweets
+            alltweets = []
 
-        # save most recent tweets
-        alltweets.extend(new_tweets)
+            # make initial request for most recent tweets (200 is the maximum allowed
+            # count)
+            new_tweets = []
+            try:
+                new_tweets = api.user_timeline(screen_name=screen_name, count=200)
+            except tweepy.TweepError:
+                print("Could not get the following user's timeline:", screen_name)
+                continue
 
-        # update the id of the oldest tweet less one
-        oldest = alltweets[-1].id - 1
+            # save most recent tweets
+            alltweets.extend(new_tweets)
 
-        print("...%s tweets downloaded so far" % (len(alltweets)))
+            # save the id of the oldest tweet less one
+            oldest = alltweets[-1].id - 1
 
-    saveCSV(alltweets, screen_name)
-    save_backupJson(alltweets, screen_name)
+            # keep grabbing tweets until there are no tweets left to grab
+            while len(new_tweets) > 0:
+                print("getting tweets before %s" % (oldest))
+
+                # all subsiquent requests use the max_id param to prevent duplicates
+                new_tweets = api.user_timeline(
+                    screen_name=screen_name, count=200, max_id=oldest)
+
+                # save most recent tweets
+                alltweets.extend(new_tweets)
+
+                # update the id of the oldest tweet less one
+                oldest = alltweets[-1].id - 1
+
+                print("...%s tweets downloaded so far" % (len(alltweets)))
+
+            saveCSV(alltweets, screen_name)
+            save_backupJson(alltweets, screen_name)
 
 
 def saveCSV(alltweets, screen_name):
-    # transform the tweepy tweets into a 2D array that will populate the csv
+    """
+    transform the tweepy tweets into a 2D array that will populate the csv
+    """
     outtweets = [[tweet.id_str, tweet.created_at,
                   tweet.text.encode("utf-8")]
                  for tweet in alltweets]
