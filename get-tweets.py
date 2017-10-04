@@ -11,71 +11,48 @@ except Exception:
     print("There is no config file")
 
 
-def get_all_tweets(screen_name):
+def get_all_tweets(screen_name, api):
     # Twitter only allows access to a users most recent 3200 tweets with this
     # method
 
-    # authorize twitter, initialize tweepy
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_key, access_secret)
-    api = tweepy.API(auth)
+    # initialize a list to hold all the tweepy Tweets
+    alltweets = []
 
-    # check if I have the twitter users I want to check
-    if(sum(1 for line in open('data/worldLeaders.json')) < 1):
-        # Iterate through all members of the owner's list
-        worldLeaderList = []
-        for member in tweepy.Cursor(api.list_members, 'verified', 'world-leaders').items():
-            worldLeaderList.append(member._json)
+    # make initial request for most recent tweets (200 is the maximum
+    # allowed count)
+    new_tweets = []
+    try:
+        new_tweets = api.user_timeline(
+            screen_name=screen_name, count=200)
+    except tweepy.TweepError:
+        print("Could not get the following user's timeline:",
+              screen_name)
+        return
 
-        with open('data/worldLeaders.json', 'w') as f:
-            json.dump(worldLeaderList, f)
+    # save most recent tweets
+    alltweets.extend(new_tweets)
 
-    with open('data/worldLeaders.json', 'r') as f:
-        # load users
-        wl = json.load(f)
+    # save the id of the oldest tweet less one
+    oldest = alltweets[-1].id - 1
 
-        for leader in wl:
-            screen_name = leader["screen_name"]
+    # keep grabbing tweets until there are no tweets left to grab
+    while len(new_tweets) > 0:
+        print("getting tweets before %s" % (oldest))
 
-            if path.isfile("data/" + screen_name + "_tweets.csv"):
-                continue
+        # all subsiquent requests use the max_id param to prevent duplicates
+        new_tweets = api.user_timeline(
+            screen_name=screen_name, count=200, max_id=oldest)
 
-            # initialize a list to hold all the tweepy Tweets
-            alltweets = []
+        # save most recent tweets
+        alltweets.extend(new_tweets)
 
-            # make initial request for most recent tweets (200 is the maximum allowed
-            # count)
-            new_tweets = []
-            try:
-                new_tweets = api.user_timeline(screen_name=screen_name, count=200)
-            except tweepy.TweepError:
-                print("Could not get the following user's timeline:", screen_name)
-                continue
+        # update the id of the oldest tweet less one
+        oldest = alltweets[-1].id - 1
 
-            # save most recent tweets
-            alltweets.extend(new_tweets)
+        print("...%s tweets downloaded so far" % (len(alltweets)))
 
-            # save the id of the oldest tweet less one
-            oldest = alltweets[-1].id - 1
-
-            # keep grabbing tweets until there are no tweets left to grab
-            while len(new_tweets) > 0:
-                print("getting tweets before %s" % (oldest))
-
-                # all subsiquent requests use the max_id param to prevent duplicates
-                new_tweets = api.user_timeline(
-                    screen_name=screen_name, count=200, max_id=oldest)
-
-                # save most recent tweets
-                alltweets.extend(new_tweets)
-
-                # update the id of the oldest tweet less one
-                oldest = alltweets[-1].id - 1
-
-                print("...%s tweets downloaded so far" % (len(alltweets)))
-
-            saveCSV(alltweets, screen_name)
-            save_backupJson(alltweets, screen_name)
+    saveCSV(alltweets, screen_name)
+    save_backupJson(alltweets, screen_name)
 
 
 def saveCSV(alltweets, screen_name):
@@ -104,10 +81,6 @@ def save_backupJson(alltweets, screen_name):
         json.dump(outtweets, f)
 
 
-def loadTwitterNames():
-    print
-
-
 if __name__ == '__main__':
     # setup environment variables
     setEnvironVars()
@@ -117,5 +90,30 @@ if __name__ == '__main__':
     consumer_key = getenv("TWITTER_CONSUMER_KEY")
     consumer_secret = getenv("TWITTER_CONSUMER_SECRET")
 
-    twitterNamesFile = "data/twitterNames.txt"
-    get_all_tweets("realDonaldTrump")
+    # authorize twitter, initialize tweepy
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_key, access_secret)
+    api = tweepy.API(auth)
+
+    # check if I have the twitter users I want to check
+    if(sum(1 for line in open('data/worldLeaders.json')) < 1):
+        # Iterate through all members of the owner's list
+        worldLeaderList = []
+        for member in tweepy.Cursor(api.list_members, 'verified',
+                                    'world-leaders').items():
+            worldLeaderList.append(member._json)
+
+        with open('data/worldLeaders.json', 'w') as f:
+            json.dump(worldLeaderList, f)
+
+    with open('data/worldLeaders.json', 'r') as f:
+        # load users
+        wl = json.load(f)
+
+        for leader in wl:
+            screen_name = leader["screen_name"]
+
+            if path.isfile("data/" + screen_name + "_tweets.csv"):
+                continue
+
+            get_all_tweets(screen_name, api)
