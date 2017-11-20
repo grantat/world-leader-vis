@@ -1,4 +1,4 @@
-# World Leader Viz
+# World Leader Visualization
 
 The goal of this project is to visualize world leader social interactions collected from twitter. The names of the users used in this project were collected from the "[World Leaders](https://twitter.com/verified/lists/world-leaders/members?lang=en)" members list verified by Twitter, with the addition of other world leaders not currently in that list. For example Donald Trump (@realDonaldTrump) and Vladim
 
@@ -20,7 +20,7 @@ This data is from different World leaders. Therefore, there will be more than on
 
 ## Todo
 
-1. [ ] Twitter Data collection
+1. [x] Twitter Data collection
 2. [ ] Data parsing
 	- [ ] Text Translation
 	- [ ] Sentiment analysis
