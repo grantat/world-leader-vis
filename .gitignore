@@ -3,3 +3,6 @@ venv/
 # every attribute stored in json format
 __pycache__
 .DS_STORE
+
+# google service account
+google*.json

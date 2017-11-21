@@ -51,7 +51,7 @@ def get_all_tweets(screen_name, api):
 
         print("...%s tweets downloaded so far" % (len(alltweets)))
 
-    saveCSV(alltweets, screen_name)
+    # saveCSV(alltweets, screen_name)
     save_backupJson(alltweets, screen_name)
 
 
@@ -113,7 +113,9 @@ if __name__ == '__main__':
         for leader in wl:
             screen_name = leader["screen_name"]
 
-            if path.isfile("data/" + screen_name + "_tweets.csv"):
+            if path.isfile("data/" + screen_name + "_tweets.csv") or \
+                    path.isfile("data/backup_json/" + screen_name +
+                                "_tweets.json"):
                 continue
 
             get_all_tweets(screen_name, api)

@@ -4,9 +4,14 @@ import ast
 import json
 import time
 from googletrans import Translator
+import google.cloud as cloud
 
 
 def translate_csvs():
+    """
+    Using googletrans library. Hits rate limit or captcha
+    after 20 requests in a row.
+    """
     for filename in os.listdir("data/"):
         username = filename[:-4]
         if os.path.isfile("data/translations/" + username + ".json"):
@@ -24,7 +29,7 @@ def translate_csvs():
                     temp["id"] = row[0]
                     temp["datetime"] = row[1]
                     bytes_string = ast.literal_eval(row[2])
-                    sentence = bytes_string.decode('utf-8')
+                    sentence = bytes_string.decode('utf-8').rstrip()
                     temp["orig"] = sentence
                     # sleep for 1 seconds between requests
                     time.sleep(1)
@@ -37,7 +42,7 @@ def translate_csvs():
                             translation = translate(sentence)
                             translated_flag = False
                         except json.decoder.JSONDecodeError:
-                            print("Hit rate limit. Sleeping for 5 minutes")
+                            print("Hit rate limit. Sleeping for 2 minutes")
                             time.sleep(60 * 2)
 
                     print(translation)
@@ -76,8 +81,26 @@ def dump_data_if_not_exists(directory, filename, data):
             json.dump(data, out)
 
 
+def find_overall_lang():
+    for filename in os.listdir("data/backup_json/"):
+        print(filename)
+        username = filename[:-5]
+        lang_counts = {}
+        if filename.endswith(".json"):
+            with open("data/backup_json/" + filename, 'r') as f:
+                tweet_list = json.load(f)
+                for i in tweet_list:
+                    lang = i["lang"]
+                    lang_counts.setdefault(lang, 0)
+                    lang_counts[lang] += 1
+                    if lang == "und":
+                        print(i["text"])
+        print(lang_counts)
+        # exit()
+
+
 if __name__ == "__main__":
     directory = "data/translations/"
     makedir_if_not_exists(directory)
-
-    translate_csvs()
+    find_overall_lang()
+    # translate_csvs()
