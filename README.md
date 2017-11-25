@@ -35,3 +35,22 @@ This data is from different World leaders. Therefore, there will be more than on
 - Google translate
 - Tweepy(Twitter SDK)
 - D3.js
+
+## Data Notes
+
+First I got all the tweets from the leaders I needed.
+I saved each of the JSON responses in backup_json.
+I then transformed each of the text from each tweet into an HTML page.
+This avoided the need for me to pay for Google Translate by simply going to web page and allowing google to detect a foreign language.
+If the language was english it was not converted in anyway.
+If a language worked on a majority of the tweets but could not translate a few of them I simply discarded them.
+This proved true for the following users:
+- @eucopresident
+- @QueenNoor
+
+If a language could not be detected by Google for all of the tweets, the user would be discarded.
+This only proved true for the following users:
+- @YLeterme who used 6 different languages
+
+MedvedevRussia is MedvedevRussiaE in english.
+I simply took the english version.

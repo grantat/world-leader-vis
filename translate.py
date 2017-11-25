@@ -84,7 +84,7 @@ def dump_data_if_not_exists(directory, filename, data):
 def find_overall_lang():
     for filename in os.listdir("data/backup_json/"):
         print(filename)
-        username = filename[:-5]
+        # username = filename[:-5]
         lang_counts = {}
         if filename.endswith(".json"):
             with open("data/backup_json/" + filename, 'r') as f:
@@ -99,8 +99,25 @@ def find_overall_lang():
         # exit()
 
 
+def build_html():
+    for filename in os.listdir("data/backup_json/"):
+        print(filename)
+        username = filename[:-5]
+        if filename.endswith(".json"):
+            with open("data/backup_json/" + filename, 'r') as f, \
+                    open("data/html/" + username + ".html", 'w') as out:
+                tweet_list = json.load(f)
+                html = ("<head><meta http-equiv='Content-Type' "
+                        "content='text/html; charset=UTF-8'/></head>")
+                for i in tweet_list:
+                    html += "<div class='tweets-text' id='{}'>{}</div>".format(
+                        i["id"], i["text"])
+                out.write(html)
+
+
 if __name__ == "__main__":
     directory = "data/translations/"
     makedir_if_not_exists(directory)
-    find_overall_lang()
+    # find_overall_lang()
+    # build_html()
     # translate_csvs()
