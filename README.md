@@ -22,8 +22,8 @@ This data is from different World leaders. Therefore, there will be more than on
 
 1. [x] Twitter Data collection
 2. [ ] Data parsing
-	- [ ] Text Translation
-	- [ ] Sentiment analysis
+	- [x] Text Translation
+	- [x] Sentiment analysis
 	- [ ] Location or person speech is directed at
 3. [ ] Visualizations
 	- [ ] World Map
@@ -54,3 +54,15 @@ This only proved true for the following users:
 
 MedvedevRussia is MedvedevRussiaE in english.
 I simply took the english version.
+
+There were 272 tweets at the same datetime.
+Therefore, the tweets had to be chunked in groups on that same datetime:
+
+```Javascript
+{
+	12314121251: [{"tweet1": 123}, {"tweet2": 234}],
+}
+```
+
+There were 165553 unique timestamps for all tweets.
+The timeframe will be anytime before October 3rd.

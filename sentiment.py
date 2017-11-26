@@ -18,7 +18,7 @@ def get_sentiment(text):
 
 def dump_sentiment():
     for filename in os.listdir("data/translations/"):
-        username = filename[:-5]
+        username = filename[:-4]
         if filename.endswith(".htm"):
             print(filename)
             with open("data/translations/" + filename) as f, \
