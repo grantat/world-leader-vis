@@ -1,6 +1,6 @@
 # World Leader Visualization
 
-The goal of this project is to visualize world leader social interactions collected from twitter. The names of the users used in this project were collected from the "[World Leaders](https://twitter.com/verified/lists/world-leaders/members?lang=en)" members list verified by Twitter, with the addition of other world leaders not currently in that list. For example Donald Trump (@realDonaldTrump) and Vladim
+The goal of this project is to visualize world leader social interactions collected from twitter. The names of the users used in this project were collected from the "[World Leaders](https://twitter.com/verified/lists/world-leaders/members?lang=en)" members list verified by Twitter, with the addition of other world leaders not currently in that list. 
 
 The goal of this project is to create a timeline of tweets from all of these users over time shown on a map. The hope, is that by the completion of this project there will be a map with a timeline that users can distinctly see: what twitter users were tweeting at the time, their sentiment at the time, the location a user is tweeting from, the location a user could possibly be talking about and/or a user that one user speaks about at a given time.
 
@@ -64,5 +64,13 @@ Therefore, the tweets had to be chunked in groups on that same datetime:
 }
 ```
 
+There were 63 users in the end.
 There were 165553 unique timestamps for all tweets.
 The timeframe will be anytime before October 3rd.
+These were then grouped if they had the same day.
+
+I created date ranges on based on the number of tweets.
+If a date range had atleast 100 tweets I would mark that as a range.
+For example, if October 2, 2017 had 355 tweets it would have its own standalone date stamp.
+However, if a date had only 50 tweets it would keep going back until there were at least 100 in the date range.
+One example of this is September 30 - October 1, 2017 would go beyond 100 tweets therefore two dates are in that date range.
