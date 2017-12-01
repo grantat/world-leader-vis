@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import datetime
+import csv
 import time
 
 
@@ -94,6 +95,38 @@ def month_chunks(merge_on_month):
             json.dump(merge_on_month[month], out)
 
 
+def build_heatmap_data():
+    """ Build appropriate data format for a heatmap into a csv """
+    for filename in os.listdir("data/chunks/"):
+        if not filename.startswith("m") and filename.endswith(".json"):
+
+            month = filename[:-5]
+
+            with open("data/chunks/" + filename) as f, \
+                    open("data/heatmap/{}.csv".format(month), 'w') as out:
+                writer = csv.writer(out)
+                writer.writerow(["day", "hour", "value"])
+                data = json.load(f)
+                map_vals = {}
+                for tweet in data:
+                    temp_date = datetime.strptime(
+                        tweet["created_at"], "%Y-%m-%dT%H:%M:%S")
+                    map_vals.setdefault(temp_date.isoweekday(), {})
+                    map_vals[temp_date.isoweekday()].setdefault(
+                        temp_date.hour, 0)
+                    map_vals[temp_date.isoweekday()][temp_date.hour] += 1
+                    # print(temp_date.isoweekday(), temp_date.hour)
+                print(json.dumps(map_vals, indent=4))
+                print(filename)
+                for weekday in map_vals:
+                    for hour in map_vals[weekday]:
+                        writer.writerow([weekday, hour, map_vals[weekday][hour]])
+
+                return
+    # print(json.dumps(new_json, sort_keys=True, indent=4))
+    # save_json(new_json, "merged_data.json")
+
+
 def date_range_sets(merge_on_day):
     """
     ******DEPRECATED******
@@ -176,5 +209,6 @@ def print_duplicates(timestamps):
 
 if __name__ == "__main__":
     # match_json()
-    print_dates()
-    barchart_metrics()
+    # print_dates()
+    # barchart_metrics()
+    build_heatmap_data()
