@@ -1,0 +1,133 @@
+#!/usr/local/bin/tcsh -f
+#(run tcsh on this but don't read the .cshrc)
+
+set args = `getopt bd $*`
+if ($? != 0 || $# < 1) then
+#    echo "Usage: $0 [-bd] filename"
+    echo "Usage: $0 [-b] filename"
+    echo "             -b: don't do bibtex check"
+#    echo "             -d: don't display"
+    exit
+endif
+
+#set display = "open -a /Applications/Preview.app"
+set run_bibtex = 1
+set display = 0
+foreach i ($args)
+  switch ($i)
+    case -b:
+	set run_bibtex = 0
+	shift
+	breaksw
+#    case -d:
+#        set display = 0
+#	shift
+#	breaksw
+  endsw
+end
+
+set paper = `basename $1 .tex`
+set latex = /usr/bin/pdflatex
+set bibtex = /usr/bin/bibtex
+
+#clear
+echo "****************** BEGIN *****************************"
+echo version = latex-pdf 2003 June 21
+echo Run LaTeX on $paper.tex
+
+if !(-f $paper.tex) then
+   echo $paper.tex does not exist\!
+   break >& /dev/null
+endif
+
+echo "All LaTeX messages are suppressed (see $paper.log)"
+# see Lamport page 177 for dealing with overfull boxes.
+# basically, do this:
+# \documentclass[12pt,draft]{article}
+# draft will mark the overfull boxes and the solution
+# will become obvious...
+
+# run latex.  The cat /dev/null prevents
+# latex from stopping.  Errors are reported to $paper.log
+cat /dev/null | $latex $paper | grep zzz
+
+# determine if there was an error, by looking at $paper.log:
+set okrun = /tmp/`whoami`.$paper.okrun
+grep "Emergency stop" $paper.log | wc -l | sed -e "s/ //g" > $okrun
+
+if (`cat $okrun` == 0) then
+    rm $okrun
+    grep "Error" $paper.log | wc -l | sed -e "s/ //g" > $okrun
+endif
+
+if (`cat $okrun` == 0) then
+    rm $okrun
+    grep "Fatal error occurred" $paper.log | wc -l | sed -e "s/ //g" > $okrun
+endif
+
+if (`cat $okrun` == 0) then
+
+   set tmp = /tmp/`whoami`.$paper.bibtest
+   if ($run_bibtex) then
+    # The warning we watch for is like:
+    # LaTeX Warning: Citation `Lin.Ri' on page 13 undefined on input line 1381
+
+    grep "LaTeX Warning: Citation" $paper.log |\
+    grep "undefined" $paper.log |\
+    wc -l | sed -e "s/ //g" > $tmp
+
+    if (`cat $tmp` == 0) then
+	echo References OK
+	grep "Rerun to get cross-references right" $paper.log | wc -l | sed -e "s/ //g" > $tmp
+	if (`cat $tmp` > 0) then
+	    echo "Re-running LaTeX..."
+	    cat /dev/null | $latex $paper | grep zzz
+	    cat /dev/null | $latex $paper | grep zzz
+	endif
+    else
+	echo "New Reference -- calling BiBTeX..."
+	echo "All BiBTeX messages are suppressed (see $paper.blg)"
+	# show current status
+	$bibtex $paper | grep zzz
+	cat /dev/null | $latex $paper | grep zzz
+	cat /dev/null | $latex $paper | grep zzz
+    endif
+
+    # 1999 Nov 18
+    # The method above does not detect *removal* of a paper
+    # we can detect this as a difference between the
+    # number of \citation{ and \bibcite{ lines in $paper.aux:
+    set citation = `grep "\citation{" $paper.aux | wc -l`
+    set bibcite  = `grep "\bibcite{" $paper.aux | wc -l`
+    if !($citation == $bibcite) then
+	echo "Removed Reference -- calling BiBTeX..."
+	$bibtex $paper | grep zzz
+	cat /dev/null | $latex $paper | grep zzz
+	cat /dev/null | $latex $paper | grep zzz
+    endif
+   endif
+
+   set zero = 0
+   if !("$display" == "$zero") then
+	echo "Displaying $paper.pdf..."
+	$display $paper.pdf &
+   endif
+
+   if (-e "$tmp") then
+    rm -f $tmp
+   endif
+else
+   # begin latexerrors 
+
+   echo Found Errors
+
+   echo "*************************************************"
+   echo "* ERROR IN PAPER - fix $paper.tex file\! *"
+   echo "*************************************************"
+
+   tail -30 $paper.log
+endif
+
+rm -f $okrun
+echo "******************** END *****************************"
+
