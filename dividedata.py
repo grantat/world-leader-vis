@@ -26,8 +26,11 @@ def match_json():
                 tweets = json.load(f2)
                 # search backup_json for tweet
                 for tweet_id, i in sentiment_dict.items():
+                    profile_pic = ""
                     for tweet in tweets:
                         if tweet["id"] == int(tweet_id):
+                            profile_pic = tweet["user"][
+                                "profile_image_url_https"]
                             break
                     created_at = datetime.strptime(
                         tweet["created_at"], "%a %b %d %H:%M:%S +0000 %Y")
@@ -36,7 +39,7 @@ def match_json():
                     new_json.setdefault(int(timestamp), [])
                     new_json[int(timestamp)].append(
                         {"username": username,
-                         "id": int(tweet_id),
+                         "profile_pic": profile_pic,
                          "created_at": formatted_time,
                          "text": sentiment_dict[tweet_id]["text"],
                          "sentiment": sentiment_dict[tweet_id]["sentiment"]})
@@ -120,11 +123,8 @@ def build_heatmap_data():
                 print(filename)
                 for weekday in map_vals:
                     for hour in map_vals[weekday]:
-                        writer.writerow([weekday, hour, map_vals[weekday][hour]])
-
-                return
-    # print(json.dumps(new_json, sort_keys=True, indent=4))
-    # save_json(new_json, "merged_data.json")
+                        writer.writerow(
+                            [weekday, hour, map_vals[weekday][hour]])
 
 
 def date_range_sets(merge_on_day):
@@ -208,7 +208,7 @@ def print_duplicates(timestamps):
 
 
 if __name__ == "__main__":
-    # match_json()
-    # print_dates()
+    match_json()
+    print_dates()
     # barchart_metrics()
-    build_heatmap_data()
+    # build_heatmap_data()
