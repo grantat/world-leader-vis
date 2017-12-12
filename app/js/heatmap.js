@@ -1,13 +1,14 @@
 
-
 var margin = {
         top: 50,
         right: 0,
-        bottom: 100,
+        bottom: 40,
         left: 30
     },
-    width = 960 - margin.left - margin.right,
-    height = 430 - margin.top - margin.bottom,
+    width = $(".bottom-right-vis").width() - margin.left - margin.right,
+    height = $(".bottom-right-vis").height() - margin.top - margin.bottom,
+    // width = 860 - margin.left - margin.right,
+    // height = 430 - margin.top - margin.bottom,
     gridSize = Math.floor(width / 24),
     legendElementWidth = gridSize * 2,
     buckets = 9,
@@ -15,7 +16,7 @@ var margin = {
     days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
 
-var svg = d3.select("#chart").append("svg")
+var svg = d3.select(".bottom-right-vis svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -63,7 +64,7 @@ var heatmapChart = function(csvFile) {
         cards.append("title");
 
         cards.enter().append("rect")
-            .attr("x", (d) => (d.hour - 1) * gridSize)
+            .attr("x", (d) => (d.hour) * gridSize)
             .attr("y", (d) => (d.day - 1) * gridSize)
             .attr("rx", 4)
             .attr("ry", 4)
@@ -103,4 +104,4 @@ var heatmapChart = function(csvFile) {
     });
 };
 
-heatmapChart("http://www.cs.odu.edu/~gatkins/heatmap/2008-04.csv");
+// heatmapChart("../../data/heatmap/2017-10.csv");

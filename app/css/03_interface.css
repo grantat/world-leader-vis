@@ -852,10 +852,10 @@ header {
   .noUi-horizontal.noUi-extended .noUi-value-horizontal {
     padding-top: 5px;
     font-size: 11px; }
-    .noUi-horizontal.noUi-extended .noUi-value-horizontal:nth-child(2) {
+    /*.noUi-horizontal.noUi-extended .noUi-value-horizontal:nth-child(2) {
       margin-left: -13px; }
     .noUi-horizontal.noUi-extended .noUi-value-horizontal:last-child {
-      margin-left: -29px; }
+      margin-left: -29px; }*/
   .noUi-horizontal.noUi-extended .noUi-marker-horizontal.noUi-marker {
     width: 1px;
     height: 3px; }

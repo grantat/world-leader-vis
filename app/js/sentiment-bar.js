@@ -7,9 +7,13 @@ function sentimentBarChart(filename){
         bottom: 40,
         left: 30
     };
-    var height = 460 - margin.top - margin.bottom;
-    var width = 600 - margin.left - margin.right;
+    var height = $(".bottom-left-vis").height() - margin.top - margin.bottom;
+    var width = $(".bottom-left-vis").width() - margin.left - margin.right;
+    // var height = 460 - margin.top - margin.bottom;
+    // var width = 600 - margin.left - margin.right;
 
+    // reset section/char
+    $(".bottom-left-vis").html("");
 
     // Add svg to
     var svg = d3.select('.bottom-left-vis').
@@ -29,7 +33,7 @@ function sentimentBarChart(filename){
     var yAxis = d3.axisLeft(y).
     tickSize(6, 0);
 
-    d3.json("../../data/chunks/2017-10.json", function(error, data) {
+    d3.json(filename, function(error, data) {
         if (error) throw error;
 
         var newdata = {}, finaldata = [];
@@ -37,17 +41,20 @@ function sentimentBarChart(filename){
             if(!newdata[val.username]){
                 newdata[val.username] = {
                     "sentiment_vals": [],
+                    "profile_pic": val.profile_pic
                 }
             }
             newdata[val.username].sentiment_vals.push(parseFloat(val.sentiment));
         });
-        console.log(newdata, Object.keys(newdata).length);
+        // console.log(newdata, Object.keys(newdata).length);
+        console.log("ORIGDATA", data);
         for(var p in newdata){
-            console.log(p);
-            console.log(newdata[p].sentiment_vals);
-            finaldata.push({"username": p, "sentiment": (newdata[p].sentiment_vals.reduce(add, 0) / newdata[p].sentiment_vals.length)})
+            // console.log(p);
+            // console.log(newdata[p].sentiment_vals);
+            finaldata.push({"username": p, "profile_pic": newdata[p].profile_pic, "sentiment": (newdata[p].sentiment_vals.reduce(add, 0) / newdata[p].sentiment_vals.length)})
         }
-        console.log(finaldata);
+        console.log("FINALDATA", finaldata);
+        addProfileImages(finaldata)
         data = finaldata;
 
         x.domain(d3.extent(data, function(d) {
@@ -106,6 +113,23 @@ function add(a, b) {
     return a + b;
 }
 
+function imgError(image) {
+    image.onerror = "";
+    image.src = "assets/imgs/default_img.jpg";
+    return true;
+}
+
+function addProfileImages(data){
+    var html = "";
+
+    for(user in data){
+        html += '<a target="_blank" href="https://twitter.com/'+data[user].username+'">';
+        html += '<img id="user-'+data[user].username+'" class="profile-img" src="'+data[user].profile_pic+'" onerror="imgError(this)">';
+        html += '</a>';
+    }
+    $("#mCSB_1").html(html);
+}
+
 // call
 
-sentimentBarChart("123");
+// sentimentBarChart("../../data/chunks/2017-10.json");

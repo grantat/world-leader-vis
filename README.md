@@ -29,11 +29,11 @@ To compensate for this, any language other than English, will be converted to en
 2. [ ] Data parsing
 	- [x] Text Translation
 	- [x] Sentiment analysis
-	- [ ] Location or person speech is directed at
+	- [ ] ~~Location or person speech is directed at~~
 3. [ ] Visualizations
-	- [ ] World Map
+	- [x] ~~World Map~~ Heatmap of tweet times per month
 	- [ ] Sentiment clustering
-	- [ ] Postive/negative sentiment bar
+	- [x] Postive/negative sentiment bar
 
 ## Tools
 
@@ -70,7 +70,7 @@ Therefore, the tweets had to be chunked in groups on that same datetime:
 ```
 
 There were 63 users in the end.
-There were 165553 unique timestamps for all tweets.
+There were 165553 unique timestamps for all tweets with a total of 165799 overall.
 The timeframe will be anytime before October 3rd.
 These were then grouped if they had the same day.
 
@@ -79,3 +79,16 @@ If a date range had atleast 100 tweets I would mark that as a range.
 For example, if October 2, 2017 had 355 tweets it would have its own standalone date stamp.
 However, if a date had only 50 tweets it would keep going back until there were at least 100 in the date range.
 One example of this is September 30 - October 1, 2017 would go beyond 100 tweets therefore two dates are in that date range.
+
+## Testing Locally
+
+To test this application on a server, assuming you have python installed, perform the following commands:
+
+```
+$ cd app
+$ python -m SimpleHTTPServer 8000
+```
+
+Then navigate to http://localhost:8000.
+Make sure none of your plugins can block requests made by d3.
+If you have an ad-block installed, its recommended to disable it for localhost.

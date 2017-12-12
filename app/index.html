@@ -9,8 +9,8 @@
 
   <!-- build:css css/style.css -->
   <link href='assets/css/nouislider.min.css' rel='stylesheet'>
-  <link href='assets/css/jquery.nouislider.pips.css' rel='stylesheet'>
-  <link href='assets/css/jquery.mCustomScrollbar.css' rel='stylesheet'>
+  <!-- <link href='assets/css/jquery.nouislider.pips.css' rel='stylesheet'> -->
+  <!-- <link href='assets/css/jquery.mCustomScrollbar.css' rel='stylesheet'> -->
   <link href='assets/css/select2.css' rel='stylesheet'>
   <link href='css/01_style.css' rel='stylesheet'>
   <link href='css/02_icons.css' rel='stylesheet'>
@@ -31,7 +31,7 @@
                 </h2>
 
                 <div class="legend">
-                    <div id="legend_container">
+                    <!-- <div id="legend_container">
                         <div id="legend_depth" class="legend_container">
                             <h5>Depth Index</h5>
                         </div>
@@ -39,8 +39,7 @@
                         <div id="legend_connections" class="legend_container">
                             <h5>Amount of Agreements</h5>
                         </div>
-                        <!-- World leader list show -->
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
@@ -50,11 +49,11 @@
             </div>
 
             <div class="vis-box bottom-left-vis">
-
+                <svg></svg>
             </div>
 
             <div class="vis-box bottom-right-vis">
-
+                <svg></svg>
             </div>
 
 
@@ -81,49 +80,9 @@
                                         <!-- <div class="current-head">Agreements Per Year</div> -->
                                         <div class="timeSlider">
                                             <div class="sliderController">
-                                                <div id="slider" class="noUi-extended noUi-target noUi-ltr noUi-horizontal noUi-connect" max="66">
-                                                    <div class="noUi-base">
-                                                        <div class="noUi-origin noUi-background noUi-stacking" style="left: 100%;">
-                                                            <div class="noUi-handle noUi-handle-lower"></div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="noUi-pips noUi-pips-horizontal">
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 0.00000%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 0.00000%">1948</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 4.54545%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 9.09091%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 13.63636%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 13.63636%">1960</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 17.42424%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 21.21212%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 25.00000%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 28.78788%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 28.78788%">1970</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 32.57576%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 36.36364%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 40.15152%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 43.93939%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 43.93939%">1980</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 47.72727%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 51.51515%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 55.30303%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 59.09091%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 59.09091%">1990</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 62.87879%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 66.66667%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 70.45455%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 74.24242%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 74.24242%">2000</div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 78.28283%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 82.32323%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 86.36364%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 90.40404%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-normal" style="left: 94.44444%"></div>
-                                                        <div class="noUi-marker noUi-marker-horizontal noUi-marker-large" style="left: 98.48485%"></div>
-                                                        <div class="noUi-value noUi-value-horizontal noUi-value-large" style="left: 98.48485%">2016</div>
-                                                    </div>
+                                                <div id="slider" class="noUi-extended noUi-target noUi-ltr noUi-horizontal">
                                                 </div>
-                                                <div class="playBt buttons"><span class="currentYear">In Negotiation</span> <span class="buttons-container"><button id="prev"><span class="icon-arrow-left"></span></button> <button id="play"><span class="icon-play"></span></button> <button id="next"><span class="icon-arrow-right"></span></button></span>
+                                                <div class="playBt buttons"><span class="currentYear">10/2017</span> <span class="buttons-container"><button id="prev"><span class="icon-arrow-left"></span></button> <button id="play"><span class="icon-play"></span></button> <button id="next"><span class="icon-arrow-right"></span></button></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -131,40 +90,13 @@
                                 </div>
                                 <div class="table-row">
                                     <div class="table-headline">
-                                        <div id="showCurrent" class="active"><span class="num">...</span> Currently Shown<span class="year"></span></div>
-                                        <div id="showTotal" class="active"><span class="num">16,553</span> Total <span class="year">Tweets</span></div>
+                                        <div id="showCurrent" class="active"><span class="num">...</span> Tweets Shown<span class="year"></span></div>
+                                        <div id="showTotal" class="active"><span class="num">165,553</span> Total <span class="year">Tweets</span></div>
                                     </div>
                                     <div class="table-cell">
-                                        <div id="currentTAs" class="mCustomScrollbar _mCS_2 mCS-autoHide _mCS_1 mCS_no_scrollbar"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
-                                            <div id="mCSB_2" class="mCustomScrollBox mCS-dark-3 mCSB_vertical mCSB_inside" tabindex="0">
-                                                <div id="mCSB_2_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
+                                        <div id="currentTAs" class="mCustomScrollbar _mCS_2 mCS-autoHide _mCS_1 mCS_no_scrollbar" style="text-align: center;"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr"><div id="mCSB_1" class="mCustomScrollBox mCS-light mCSB_vertical mCSB_inside" tabindex="0"><div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
 
-                                                </div>
-                                                <div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-dark-3 mCSB_scrollTools_vertical" style="display: none;">
-                                                    <div class="mCSB_draggerContainer">
-                                                        <div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 148px; top: 0px; display: block; height: 148px; max-height: 606px;" oncontextmenu="return false;">
-                                                            <div class="mCSB_dragger_bar" style="line-height: 148px;"></div>
-                                                        </div>
-                                                        <div class="mCSB_draggerRail"></div>
-                                                    </div>
-                                                </div>
-                                            <div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-light mCSB_scrollTools_vertical"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position:absolute;" oncontextmenu="return false;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div><div id="mCSB_2_scrollbar_vertical" class="mCSB_scrollTools mCSB_2_scrollbar mCS-light mCSB_scrollTools_vertical"><div class="mCSB_draggerContainer"><div id="mCSB_2_dragger_vertical" class="mCSB_dragger" style="position:absolute;" oncontextmenu="return false;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div>
                                         </div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical" style="display: none;"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px;" oncontextmenu="return false;"><div class="mCSB_dragger_bar" style="line-height: 30px;"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div><div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-light mCSB_scrollTools_vertical"><div class="mCSB_draggerContainer"><div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position:absolute;" oncontextmenu="return false;"><div class="mCSB_dragger_bar"></div></div><div class="mCSB_draggerRail"></div></div></div></div></div>
-                                        <div id="allTAs" style="display: none" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar _mCS_2"><div id="mCSB_2" class="mCustomScrollBox mCS-light mCSB_vertical"><div id="mCSB_2_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr"><div id="mCSB_2" class="mCustomScrollBox mCS-light mCSB_vertical"><div id="mCSB_2_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
-                                            <div id="mCSB_1" class="mCustomScrollBox mCS-dark-3 mCSB_vertical mCSB_inside" tabindex="0">
-                                                <div id="mCSB_1_container" class="mCSB_container mCS_y_hidden mCS_no_scrollbar_y" style="position:relative; top:0; left:0;" dir="ltr">
-                                                    <ol class="items"></ol>
-                                                </div>
-                                                <div id="mCSB_1_scrollbar_vertical" class="mCSB_scrollTools mCSB_1_scrollbar mCS-dark-3 mCSB_scrollTools_vertical" style="display: none;">
-                                                    <div class="mCSB_draggerContainer">
-                                                        <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 30px; top: 0px;" oncontextmenu="return false;">
-                                                            <div class="mCSB_dragger_bar" style="line-height: 30px;"></div>
-                                                        </div>
-                                                        <div class="mCSB_draggerRail"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div></div></div></div></div>
                                     </div>
                                 </div>
 
@@ -175,10 +107,15 @@
 
 
 <!-- build:js js/lib.js -->
-<!-- <script src="assets/js/d3.min.js"></script> -->
 <script src="assets/js/d3.v4.min.js"></script>
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/wNumb.js"></script>
+<script src="assets/js/nouislider.min.js"></script>
+<script src="js/resize.js"></script>
 <script src="js/sentiment-bar.js"></script>
-<script src="http://www.cs.odu.edu/~gatkins/heatmap/heatmap.js"></script>
+<script src="js/heatmap.js"></script>
+<script src="js/update.js"></script>
+<script src="js/slider.js"></script>
 <!-- <script src="assets/js/d3.tip.v0.6.3.js"></script> -->
 <!-- <script src="assets/js/pathg.js"></script>
 <script src="assets/js/queue.v1.min.js"></script>
