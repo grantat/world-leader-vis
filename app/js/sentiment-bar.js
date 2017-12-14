@@ -3,14 +3,12 @@
 function sentimentBarChart(filename){
     var margin = {
         top: 20,
-        right: 20,
         bottom: 40,
-        left: 30
+        right: 100,
+        left: 100
     };
     var height = $(".bottom-left-vis").height() - margin.top - margin.bottom;
     var width = $(".bottom-left-vis").width() - margin.left - margin.right;
-    // var height = 460 - margin.top - margin.bottom;
-    // var width = 600 - margin.left - margin.right;
 
     // reset section/char
     $(".bottom-left-vis").html("");
@@ -46,14 +44,11 @@ function sentimentBarChart(filename){
             }
             newdata[val.username].sentiment_vals.push(parseFloat(val.sentiment));
         });
-        // console.log(newdata, Object.keys(newdata).length);
-        console.log("ORIGDATA", data);
+
         for(var p in newdata){
-            // console.log(p);
-            // console.log(newdata[p].sentiment_vals);
             finaldata.push({"username": p, "profile_pic": newdata[p].profile_pic, "sentiment": (newdata[p].sentiment_vals.reduce(add, 0) / newdata[p].sentiment_vals.length)})
         }
-        console.log("FINALDATA", finaldata);
+        
         addProfileImages(finaldata)
         data = finaldata;
 

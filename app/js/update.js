@@ -11,7 +11,8 @@ function drawGraphs(){
     // update sentiment-bar, heatmap, clusters, sidebar items
     heatmapChart("../../data/heatmap/"+y[iter]+".csv");
     sentimentBarChart("../../data/chunks/"+y[iter]+".json");
-    // CALL CLUSTER CODE HERE
+    d3.json("../../data/clusters/"+y[iter]+".json", display);
+    // set tweet counts
     $("#showCurrent .num").html(tweet_counts[iter]);
 }
 
@@ -29,6 +30,7 @@ $.get( "../data/date-ranges.json", function( data ) {
     current_month = y[iter];
     drawGraphs();
     // draw slider and side barchart
+    sideBarchart();
     makeSlider();
 });
 
@@ -42,9 +44,7 @@ function autoUpdate(){
     // For the play button interval function
     // go left with index
     iter -= 1;
-    if ( y[iter] !== void 0 ) {
-        iter -= 1;
-    }else{
+    if ( y[iter] === void 0 ) {
         iter = y.length - 1;
     }
 
