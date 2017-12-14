@@ -26,20 +26,30 @@ To compensate for this, any language other than English, will be converted to en
 ## Todo
 
 1. [x] Twitter Data collection
-2. [ ] Data parsing
+2. [x] Data parsing
 	- [x] Text Translation
 	- [x] Sentiment analysis
 	- [ ] ~~Location or person speech is directed at~~
-3. [ ] Visualizations
+3. [x] Visualizations
 	- [x] ~~World Map~~ Heatmap of tweet times per month
-	- [ ] Sentiment clustering
+	- [x] ~~Sentiment clustering~~ Term usage among users
 	- [x] Postive/negative sentiment bar
 
 ## Tools
 
 - Google translate
 - Tweepy(Twitter SDK)
+- beautifulsoup4
+- textblob
+- nltk
 - D3.js
+
+Google translate and D3.js are used in separate parts of processing data.
+The other four requirements however can be installed using pip with the following command:
+
+```shell
+$ pip3 install -r requirements.txt
+```
 
 ## Data Notes
 

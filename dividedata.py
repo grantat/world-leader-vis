@@ -5,7 +5,6 @@ import string
 import re
 import csv
 import time
-import heapq
 from nltk.corpus import stopwords
 
 
