@@ -1,7 +1,4 @@
 tweepy
-googletrans
-google-cloud
 beautifulsoup4
 textblob
 nltk
-scattertext

@@ -1,8 +1,12 @@
 import json
 import os
 from datetime import datetime
+import string
+import re
 import csv
 import time
+import heapq
+from nltk.corpus import stopwords
 
 
 def save_json(new_json, filename):
@@ -207,8 +211,103 @@ def print_duplicates(timestamps):
     print(not_uniq)
 
 
+def extract_hash_tags(s):
+    return set(part[1:] for part in s.split() if part.startswith('#'))
+
+
+def remove_links(s):
+    result = re.sub(r"http\S+", "", s)
+    return result
+
+
+def trans_remove(text):
+    if text.startswith("#") or text.startswith("@"):
+        return ""
+    temp = ""
+    temp = text.translate(str.maketrans('', '', string.punctuation))
+    temp = temp.translate(str.maketrans('', '', '1234567890'))
+    temp = temp.replace("RT", "")
+    temp = temp.lower()
+    return temp
+
+
+def get_top_terms(dic, count_key, k):
+    while 1 != 0:
+        try:
+            for i in range(k, 0, -1):
+                return sorted(
+                    dic, key=lambda k: dic[k][count_key],
+                    reverse=True)[:i]
+        except:
+            # count down until found max size
+            k -= 1
+            continue
+    # no results
+    return {}
+
+
+def term_counts():
+    """
+    Build bubble chart data from tweets.
+    Builds a corpus from the month of tweets then
+    looks at each user's tweets to check if a user used the top n-words
+    """
+    stops = set(stopwords.words("english"))
+    for filename in os.listdir("data/chunks/"):
+        if not filename.startswith("m") and filename.endswith(".json"):
+
+            month = filename[:-5]
+            print(month)
+
+            hashtags = {}
+            k_words = {}
+            with open("data/chunks/{}".format(filename)) as f:
+                tweets = json.load(f)
+                for t in tweets:
+                    d = t["text"]
+                    user_pic = t["profile_pic"]
+                    # print(d)
+                    # get hashtags and add counts
+                    temp_tags = extract_hash_tags(d)
+                    for t in temp_tags:
+                        if t:
+                            hashtags.setdefault(
+                                t, {"count": 0, "profile_imgs": []})
+                            hashtags[t]["count"] += 1
+                            if user_pic not in hashtags[t]["profile_imgs"]:
+                                hashtags[t]["profile_imgs"].append(user_pic)
+                    # get non-stopwords with no punctuations
+                    # links or #/@ symbols
+                    d = remove_links(d)
+                    for word in d.split():
+                        temp = trans_remove(word)
+                        if temp and temp not in stops:
+                            k_words.setdefault(
+                                temp, {"count": 0, "profile_imgs": []})
+                            k_words[temp]["count"] += 1
+                            if user_pic not in k_words[temp]["profile_imgs"]:
+                                k_words[temp]["profile_imgs"].append(user_pic)
+
+            # print(json.dumps(hashtags, sort_keys=True, indent=4))
+            # print(len(hashtags))
+            srt_tags = get_top_terms(hashtags, "count", 250)
+            srt_words = get_top_terms(k_words, "count", 250)
+
+            word_dump = {}
+            tag_dump = {}
+            for t in srt_words:
+                word_dump.setdefault(t, k_words[t])
+            for t in srt_tags:
+                tag_dump.setdefault(t, hashtags[t])
+            with open("data/clusters/{}.json".format(month), 'w') as out:
+                json.dump(word_dump, out)
+            with open("data/clusters/{}.tags.json".format(month), 'w') as out:
+                json.dump(tag_dump, out)
+
+
 if __name__ == "__main__":
-    match_json()
-    print_dates()
+    # match_json()
+    # print_dates()
     # barchart_metrics()
     # build_heatmap_data()
+    term_counts()
