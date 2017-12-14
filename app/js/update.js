@@ -9,9 +9,10 @@ var y = [],
 
 function drawGraphs(){
     // update sentiment-bar, heatmap, clusters, sidebar items
-    heatmapChart("../../data/heatmap/"+y[iter]+".csv");
-    sentimentBarChart("../../data/chunks/"+y[iter]+".json");
-    d3.json("../../data/clusters/"+y[iter]+".json", display);
+    heatmapChart("../data/heatmap/"+y[iter]+".csv");
+    sentimentBarChart("../data/chunks/"+y[iter]+".json");
+    // bubble chart
+    d3.json("../data/clusters/"+y[iter]+".json", display);
     // set tweet counts
     $("#showCurrent .num").html(tweet_counts[iter]);
 }
