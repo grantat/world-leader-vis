@@ -220,7 +220,7 @@ function bubbleChart() {
     // Manual legend
     $("#legend_container .leg").html("");
     var html = "";
-    var caps = ["&#x2264; 4", "&#x2264; 10", "&#x2264; 15", "&#x2264; 25", "&#8805; 25"]
+    var caps = ["&#x2264; 4", "&#x2264; 10", "&#x2264; 15", "&#x2264; 25", "&#62; 25"];
     for(c in colors){
         html += "<div class='leg-item'><div class='leg-sub' style='background-color:"+colors[c]+"'></div><div class='leg-sub-val'> "+caps[c]+"</div></div>";
     }
