@@ -12,6 +12,9 @@ function sentimentBarChart(filename){
     var height = $(".bottom-left-vis").height() - margin.top - margin.bottom;
     var width = $(".bottom-left-vis").width() - margin.left - margin.right;
 
+    // reset section/char
+    $(".bottom-left-vis").html("");
+
     // Add svg to
     var svg = d3.select('.bottom-left-vis').
     append('svg').
@@ -57,8 +60,6 @@ function sentimentBarChart(filename){
         y.domain(data.map(function(d) {
             return d.username;
         }));
-
-        d3.selectAll('.bar').data(data).exit().remove();
 
         svg.selectAll('.bar').
         attr('transform', 'translate(' + 0 + ',0)').
