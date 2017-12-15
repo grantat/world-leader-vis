@@ -16,14 +16,19 @@ var margin = {
     days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
     times = ["1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a", "9a", "10a", "11a", "12a", "1p", "2p", "3p", "4p", "5p", "6p", "7p", "8p", "9p", "10p", "11p", "12p"];
 
-// tooltip for mouseover functionality
-var tp = floatingTooltip('gates_tooltip', 240);
-
 var svg = d3.select(".bottom-right-vis svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("text")
+      .attr("class", "title")
+      .attr("x", width/2)
+      .attr("y", 0 - (margin.top / 2) - 8)
+      .attr("text-anchor", "middle")
+      .attr("style", "")
+      .text("Tweet Times Heatmap");
 
 var dayLabels = svg.selectAll(".dayLabel")
     .data(days)
@@ -94,7 +99,7 @@ var heatmapChart = function(csvFile) {
 
         legend_g.append("rect")
             .attr("x", (d, i) => legendElementWidth * i)
-            .attr("y", height)
+            .attr("y", gridSize * 7 + 30)
             .attr("width", legendElementWidth)
             .attr("height", gridSize / 2)
             .style("fill", (d, i) => colors[i]);
@@ -103,7 +108,7 @@ var heatmapChart = function(csvFile) {
             .attr("class", "mono")
             .text((d) => "≥ " + Math.round(d))
             .attr("x", (d, i) => legendElementWidth * i)
-            .attr("y", height + gridSize);
+            .attr("y", gridSize * 8 + 30);
 
         legend.exit().remove();
     });

@@ -1,4 +1,6 @@
-// 'use strict'; // Variable declaration
+// Reused in heatmap
+// tooltip for mouseover functionality
+var tp = floatingTooltip('gates_tooltip', 240);
 
 function sentimentBarChart(filename){
     var margin = {
@@ -48,7 +50,7 @@ function sentimentBarChart(filename){
         for(var p in newdata){
             finaldata.push({"username": p, "profile_pic": newdata[p].profile_pic, "sentiment": (newdata[p].sentiment_vals.reduce(add, 0) / newdata[p].sentiment_vals.length)})
         }
-        
+
         addProfileImages(finaldata)
         data = finaldata;
 
@@ -60,6 +62,7 @@ function sentimentBarChart(filename){
         }));
 
         svg.selectAll('.bar').
+        attr('transform', 'translate(' + 0 + ',0)').
         data(data).
         enter().append('rect').
         attr('class', function(d) {
@@ -74,27 +77,56 @@ function sentimentBarChart(filename){
         attr('width', function(d) {
             return Math.abs(x(d.sentiment) - x(0));
         }).
-        attr('height', 6);
+        attr('height', y.bandwidth())
+        .on('mouseover', barMouseover)
+        .on('mouseout', barHideMouseover);
 
         svg.append('g').
         attr('class', 'x axis').
-        attr('transform', 'translate(0,' + height + ')').
+        attr('transform', 'translate(0,' + (height + 20) + ')').
         call(xAxis);
 
         var tickNegative = svg.append('g').
         attr('class', 'y axis').
-        attr('transform', 'translate(' + x(0) + ',0)').
+        attr('transform', 'translate(' + 0 + ',0)').
         call(yAxis).
         selectAll('.tick').
-        filter(function(d, i) {
-            return data[i].sentiment < 0;
+        data(function(d, i) {
+            return data[i].sentiment;
         });
 
+        // var legend = svg.selectAll(".legend")
+        //     .data(options.slice())
+        //     .enter().append("g")
+        //     .attr("class", "legend")
+        //     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        //
+        // legend.append("rect")
+        //     .attr("x", width - 18)
+        //     .attr("width", 18)
+        //     .attr("height", 18)
+        //     .style("fill", color);
+        //
+        // legend.append("text")
+        //     .attr("x", width - 24)
+        //     .attr("y", 9)
+        //     .attr("dy", ".35em")
+        //     .style("text-anchor", "end")
+
+        // title
+        svg.append("text")
+          .attr("class", "title")
+          .attr("x", width/2)
+          .attr("y", 0 - (margin.top / 6))
+          .attr("text-anchor", "middle")
+          .attr("style", "")
+          .text("Average Sentiment Bar Chart");
+
         tickNegative.select('line').
-        attr('x2', 6);
+        attr('x2', 0);
 
         tickNegative.select('text').
-        attr('x', 9).
+        attr('x', 0).
         style('text-anchor', 'start');
     });
 }
@@ -112,6 +144,24 @@ function imgError(image) {
     image.onerror = "";
     image.src = "assets/imgs/default_img.jpg";
     return true;
+}
+
+function barMouseover(d){
+    // change outline to indicate hover state.
+    d3.select(this).attr('stroke', 'black');
+    var pics = '';
+
+    var content = '<span class="name">Average Sentiment: </span><span class="value">' +
+                  d.sentiment +
+                  '</span><br/>';
+
+    tp.showTooltip(content, d3.event);
+}
+
+function barHideMouseover(d) {
+  // reset outline
+  d3.select(this).attr('stroke', '');
+  tp.hideTooltip();
 }
 
 function addProfileImages(data){

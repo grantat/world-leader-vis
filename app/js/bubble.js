@@ -14,6 +14,12 @@ function bubbleChart() {
   // tooltip for mouseover functionality
   var tooltip = floatingTooltip('gates_tooltip', 240);
 
+  // colors
+  var colorNames = ['low', 'medium', 'high', 'higher', 'highest'];
+  var colors = ["#41b6c4", "#1d91c0", "#225ea8", "#253494", "#081d58"];
+  var buckets = 5,
+      legendElementWidth = $("#legend_depth").width() * buckets;
+
   // Locations to move bubbles towards, depending
   // on which view mode is selected.
   var center = { x: width / 2, y: height / 2 };
@@ -74,8 +80,8 @@ function bubbleChart() {
   // Nice looking colors - no reason to buck the trend
   // @v4 scales now have a flattened naming scheme
   var fillColor = d3.scaleOrdinal()
-    .domain(['low', 'medium', 'high', 'higher', 'highest'])
-    .range(["#41b6c4", "#1d91c0", "#225ea8", "#253494", "#081d58"]);
+    .domain(colorNames)
+    .range(colors);
 
 
   function determineGroup(numUsers){
@@ -134,7 +140,7 @@ function bubbleChart() {
     // working with data.
     var myNodes = Object.keys(rawData).map(item => {
         var d = rawData[item];
-        console.log(d);
+        // console.log(d);
         var group = determineGroup(d.profile_imgs.length)
         return {
             id: d.id,
@@ -177,6 +183,9 @@ function bubbleChart() {
       // .append('svg')
       .attr('width', width)
       .attr('height', height);
+      var colorScale = d3.scaleQuantile()
+          .domain([0, buckets - 1, d3.max(rawData, (d) => d.radius)])
+          .range(colors);
 
     // remove first time
     d3.selectAll('.bubble').data(rawData).exit().remove();
@@ -199,6 +208,23 @@ function bubbleChart() {
       .attr('fill-opacity', 1)
       .on('mouseover', showDetail)
       .on('mouseout', hideDetail);
+
+    // Add title to svg
+      svg.append("text")
+        .attr("class", "title")
+        .attr("x", width/2)
+        .attr("y", 30)
+        .attr("text-anchor", "middle")
+        .text("Top 250 User Terms Bubble Chart");
+
+    // Manual legend
+    $("#legend_container .leg").html("");
+    var html = "";
+    var caps = ["&#x2264; 4", "&#x2264; 10", "&#x2264; 15", "&#x2264; 25", "&#8805; 25"]
+    for(c in colors){
+        html += "<div class='leg-item'><div class='leg-sub' style='background-color:"+colors[c]+"'></div><div class='leg-sub-val'> "+caps[c]+"</div></div>";
+    }
+    $("#legend_container .leg").append(html);
 
     // @v4 Merge the original empty selection and the enter selection
     bubbles = bubbles.merge(bubblesE);

@@ -752,3 +752,29 @@ text.axis-worktime {
 .tooltip .name {
   font-weight:bold;
 }
+
+.switch-btn {
+    top:0;
+    right:0;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+}
+
+.leg-item {
+    text-align: right;
+    height: 10px;
+    width: 120px;
+    margin-bottom: 2px;
+}
+
+.leg-sub {
+    height: 100%;
+    width: 80px;
+    float: left;
+}
+
+.leg-sub-val {
+    float:left;
+    text-align: right;
+}

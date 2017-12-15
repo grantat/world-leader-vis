@@ -506,7 +506,7 @@ canvas {
 
 .legend {
   width: 123px;
-  margin-left: 0px;
+  margin-left: 10px;
   position: absolute;
   z-index: 10; }
   @media (max-width: 64em) {
@@ -989,7 +989,7 @@ header {
   background-color: #5d7b8e; }
 
 #container .head .legend, #container .author, #container .center, #container #sidebar {
-  opacity: 0.001;
+  /*opacity: 0.001;*/
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
@@ -1026,7 +1026,8 @@ header {
   -ms-transition: top 1200ms 0.1s ease;
   -khtml-transition: top 1200ms 0.1s ease; }
 #container .head .legend {
-  margin-left: 0px;
+  margin-left: 10px;
+  left: 10px;
   transition: margin-left 600ms 1.2s, opacity 1s 1.2s;
   -moz-transition: margin-left 600ms 1.2s, opacity 1s 1.2s;
   -webkit-transition: margin-left 600ms 1.2s, opacity 1s 1.2s;
