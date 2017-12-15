@@ -27,8 +27,8 @@ foreach i ($args)
 end
 
 set paper = `basename $1 .tex`
-set latex = /usr/bin/pdflatex
-set bibtex = /usr/bin/bibtex
+set latex = /usr/local/bin/pdflatex
+set bibtex = /usr/local/bin/bibtex
 
 #clear
 echo "****************** BEGIN *****************************"
@@ -117,7 +117,7 @@ if (`cat $okrun` == 0) then
     rm -f $tmp
    endif
 else
-   # begin latexerrors 
+   # begin latexerrors
 
    echo Found Errors
 

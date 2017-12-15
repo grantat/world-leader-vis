@@ -1,0 +1,23 @@
+\begin{thebibliography}{1}
+
+\bibitem{fta-vis}
+A.~Dur, L.~Baccini, and M.~Elsig.
+\newblock The design of international trade agreements: Introducing a new
+  dataset.
+\newblock In {\em Forthcoming in the Review of International Organizations},
+  2014.
+
+\bibitem{kessler2017scattertext}
+J.~S. Kessler.
+\newblock Scattertext: a browser-based tool for visualizing how corpora differ.
+\newblock 2017.
+
+\bibitem{tblob}
+S.~Loria.
+\newblock Textblob natural language processing.
+
+\bibitem{twit-worldlist}
+T.~Verified.
+\newblock World leaders verified by twitter.
+
+\end{thebibliography}

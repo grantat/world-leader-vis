@@ -85,7 +85,7 @@ The timeframe will be anytime before October 3rd.
 These were then grouped if they had the same day.
 
 I created date ranges on based on the number of tweets.
-If a date range had atleast 100 tweets I would mark that as a range.
+If a date range had at least 100 tweets I would mark that as a range.
 For example, if October 2, 2017 had 355 tweets it would have its own standalone date stamp.
 However, if a date had only 50 tweets it would keep going back until there were at least 100 in the date range.
 One example of this is September 30 - October 1, 2017 would go beyond 100 tweets therefore two dates are in that date range.
