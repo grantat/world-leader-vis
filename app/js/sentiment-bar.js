@@ -12,9 +12,6 @@ function sentimentBarChart(filename){
     var height = $(".bottom-left-vis").height() - margin.top - margin.bottom;
     var width = $(".bottom-left-vis").width() - margin.left - margin.right;
 
-    // reset section/char
-    $(".bottom-left-vis").html("");
-
     // Add svg to
     var svg = d3.select('.bottom-left-vis').
     append('svg').
@@ -61,6 +58,8 @@ function sentimentBarChart(filename){
             return d.username;
         }));
 
+        d3.selectAll('.bar').data(data).exit().remove();
+
         svg.selectAll('.bar').
         attr('transform', 'translate(' + 0 + ',0)').
         data(data).
@@ -94,24 +93,6 @@ function sentimentBarChart(filename){
         data(function(d, i) {
             return data[i].sentiment;
         });
-
-        // var legend = svg.selectAll(".legend")
-        //     .data(options.slice())
-        //     .enter().append("g")
-        //     .attr("class", "legend")
-        //     .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-        //
-        // legend.append("rect")
-        //     .attr("x", width - 18)
-        //     .attr("width", 18)
-        //     .attr("height", 18)
-        //     .style("fill", color);
-        //
-        // legend.append("text")
-        //     .attr("x", width - 24)
-        //     .attr("y", 9)
-        //     .attr("dy", ".35em")
-        //     .style("text-anchor", "end")
 
         // title
         svg.append("text")
