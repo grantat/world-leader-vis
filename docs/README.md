@@ -2,6 +2,8 @@
 
 This directory is for the paper submission with requirements specified here: http://www.cs.odu.edu/~mweigle/CS725-F17/Project#toc8
 
+My paper submission is here: [pdf](./paper-template.pdf).
+
 ## Compiling LaTeX
 
 `latex-pdf` is a script that is executable on ODU-CS servers that compiles the .tex, .bib, .cls, and .bst files into a pdf.
