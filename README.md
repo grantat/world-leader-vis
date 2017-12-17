@@ -104,5 +104,4 @@ If you have an ad-block installed, its recommended to disable it for localhost.
 
 ## Inspirations
 
-This work was inspired by [FTAVis](http://www.ftavis.com/) and uses parts of the web design parts of it for this project.
-Their project can be found here: https://github.com/ahoiin/ftavis-webapp.
+This work was inspired by [FTAVis](http://www.ftavis.com/) and includes parts of their web design for this project.
