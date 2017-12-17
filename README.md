@@ -101,3 +101,8 @@ $ python -m SimpleHTTPServer 8000
 Then navigate to http://localhost:8000.
 Make sure none of your plugins can block requests made by d3.
 If you have an ad-block installed, its recommended to disable it for localhost.
+
+## Inspirations
+
+This work was inspired by [FTAVis](http://www.ftavis.com/) and uses parts of the web design parts of it for this project.
+Their project can be found here: https://github.com/ahoiin/ftavis-webapp.
